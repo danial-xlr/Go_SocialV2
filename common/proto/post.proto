@@ -1,0 +1,41 @@
+syntax = "proto3";
+package post;
+option go_package="./post";
+
+message Post {
+    uint64 id=1;
+    string body=2;
+    uint64 profile_id=3;
+    bytes creat_at=4;
+}
+
+message CreatPostRequest {
+    uint64 profile_id=1;
+    string body=2;
+}
+
+message CreatPostResponse {
+    Post post=1;
+}
+
+message GetPostByIdRequest {
+    uint64 id=1;
+}
+
+message GetPostByIdResponse {
+    Post post=1;
+}
+
+message GetPostsByProfileIdRequest{
+    uint64 profile_id=1;
+}
+
+message GetPostsByProfileIdResponse {
+    repeated Post post=1;
+}
+
+service PostService{
+    rpc CreatPost(CreatPostRequest) returns (CreatPostResponse);
+    rpc GetPostById(GetPostByIdRequest) returns (GetPostByIdResponse);
+    rpc GetPostsByProfileId(GetPostsByProfileIdRequest) returns (GetPostsByProfileIdResponse);
+}
