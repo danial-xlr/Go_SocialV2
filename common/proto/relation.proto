@@ -1,0 +1,39 @@
+syntax = "proto3";
+package relation;
+option go_package="./relation";
+
+message Relation {
+    uint64 id=1;
+    uint64 profile_id=2;
+    uint64 following_id=3;
+}
+
+message CreatRelationRequest{
+    uint64 profile_id=2;
+    uint64 following_id=3;
+}
+message CreatRelationResponse{
+    Relation relation=1;
+}
+
+message GetProfileFollowingRequest{
+    uint64 profile_id=1;    
+}
+
+message GetProfileFollowingResponse{
+    repeated uint64 profile_id=1;
+}
+
+message GetProfileFollowerRequest{
+    uint64 profile_id=1;    
+}
+
+message GetProfileFollowerResponse{
+    repeated uint64 profile_id=1;
+}
+
+service RelationService{
+    rpc CreatRelation(CreatRelationRequest) returns (CreatRelationResponse);
+    rpc GetProfileFollowing(GetProfileFollowingRequest) returns (GetProfileFollowingResponse);
+    rpc GetProfileFollower (GetProfileFollowerRequest) returns (GetProfileFollowerResponse);
+}

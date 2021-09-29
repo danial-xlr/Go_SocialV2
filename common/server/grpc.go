@@ -3,6 +3,7 @@ package server
 import (
 	"fmt"
 	"net"
+	"os"
 
 	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
 	grpc_logrus "github.com/grpc-ecosystem/go-grpc-middleware/logging/logrus"
@@ -11,11 +12,14 @@ import (
 	"google.golang.org/grpc"
 )
 
-
-
+func init() {
+	grpc_logrus.ReplaceGrpcLogger(logrus.NewEntry(logrus.StandardLogger()))
+}
 
 func RunGRPCServer(registerServer func(server *grpc.Server)) {
-	port := "8080"
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"	}
 	
 	addr := fmt.Sprintf(":%s", port)
 	RunGRPCServerOnAddr(addr, registerServer)

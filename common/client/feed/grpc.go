@@ -1,36 +1,35 @@
-package profile
+package feed
 
 import (
-	"common/proto/profile"
-	//"crypto/tls"
-	//"crypto/x509"
+	"common/proto/feed"
+	"crypto/tls"
+	"crypto/x509"
 	"errors"
 	"os"
-	//"strconv"
+	"strconv"
 
 	"google.golang.org/grpc"
-	//"google.golang.org/grpc/credentials"
+	"google.golang.org/grpc/credentials"
 )
 
-func NewProfileClient()(client profile.ProfileServiceClient,close func()error,err error){
+func NewFeedClient()(client feed.FeedServiceClient,close func()error,err error){
 	grpcAddr := os.Getenv("TRAINER_GRPC_ADDR")
 	if grpcAddr == "" {
 		return nil, func() error { return nil }, errors.New("empty env TRAINER_GRPC_ADDR")
 	}
-	//opts, err := grpcDialOpts(grpcAddr)
-	/*if err != nil {
-		return nil, func() error { return nil }, err
-	}*/
-
-	//conn, err := grpc.Dial(grpcAddr, opts...)
-	conn, err := grpc.Dial(grpcAddr)
+	opts, err := grpcDialOpts(grpcAddr)
 	if err != nil {
 		return nil, func() error { return nil }, err
 	}
-	return profile.NewProfileServiceClient(conn),conn.Close,nil
+
+	conn, err := grpc.Dial(grpcAddr, opts...)
+	if err != nil {
+		return nil, func() error { return nil }, err
+	}
+	return feed.NewFeedServiceClient(conn),conn.Close,nil
 }
 
-/*func grpcDialOpts(grpcAddr string) ([]grpc.DialOption, error) {
+func grpcDialOpts(grpcAddr string) ([]grpc.DialOption, error) {
 	if noTLS, _ := strconv.ParseBool(os.Getenv("GRPC_NO_TLS")); noTLS {
 		return []grpc.DialOption{grpc.WithInsecure()}, nil
 	}
@@ -46,4 +45,4 @@ func NewProfileClient()(client profile.ProfileServiceClient,close func()error,er
 	return []grpc.DialOption{
 		grpc.WithTransportCredentials(creds),		
 	}, nil
-}*/
+}

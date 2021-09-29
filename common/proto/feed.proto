@@ -1,0 +1,30 @@
+syntax = "proto3";
+package feed;
+option go_package="./feed";
+
+message Feed {    
+    uint64 id=1;
+    uint64 profile_id=2;
+    repeated uint64 feed_post=3;
+}
+
+message CreatFeedRequest{
+    uint64 profile_id=1;
+}
+
+message CreatFeedResponse{
+    Feed feed=1;
+}
+
+message GetProfileFeedRequest{
+    uint64 profile_id=1;
+}
+
+message GetProfileFeedResponse{
+    Feed feed=1;
+}
+
+service FeedService{
+    rpc CreatFeed(CreatFeedRequest) returns (CreatFeedResponse){}
+    rpc GetProfileFeed(GetProfileFeedRequest) returns (GetProfileFeedResponse){}
+}

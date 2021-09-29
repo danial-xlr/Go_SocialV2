@@ -1,0 +1,57 @@
+scalar Time
+
+type Profile {
+  id : Int!
+  user_name : String!
+}
+
+type Post {
+  id : Int!
+  body : String!
+  profile_id : Int!
+  creat_at : Time!
+}
+
+type Relation {
+  id : Int!
+  profile_id : Int!
+  following_id : Int!
+}
+
+type Feed {
+  id : Int!
+  profile_id : Int!
+  posts :[Int!]!
+}
+
+input ProfileInput {
+  user_name : String!
+}
+
+input PostInput {
+  body : String!
+  profile_id : Int!
+}
+
+input RelationInput {
+  profile_id : Int!
+  following_id : Int!
+}
+
+input FeedInput {
+  profile_id : Int!
+}
+
+type Mutation {
+  creatProfile(profile: ProfileInput!) : Profile!
+  creatPost(post:PostInput!) :Post!
+  creatRlation(relation:RelationInput!) : Relation!
+  creatFeed(feed:FeedInput!):Feed!
+}
+
+type Query {
+  profiles(id : Int):[Profile!]!
+  posts(id : Int , profile_id : Int) :[Post!]!
+  relations(profile_id : Int) : [Int!]!
+  feeds(profile_id : Int) : Feed!
+}

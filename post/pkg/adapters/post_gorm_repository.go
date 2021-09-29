@@ -13,9 +13,9 @@ type MySqlRepository struct{
 	DB *gorm.DB
 }
 type MySqlPost struct {
-	ID        int    `json:"id"`
-	Body      string `json:"body"`
-	ProfileId int    `json:"profile_id"`
+	ID        int    	`json:"id"`
+	Body      string 	`json:"body"`
+	ProfileId int    	`json:"profile_id"`
 	CreatAt   time.Time `json:"creat_at"`
 }
 
@@ -23,6 +23,7 @@ func NewMySqlPostRepository(db *gorm.DB)MySqlRepository{
 	if db==nil{
 		panic("nil db")
 	}
+	db.AutoMigrate(&MySqlPost{})
 	return MySqlRepository{DB: db}
 }
 
@@ -88,7 +89,7 @@ func DbURL()string{
   	Port:=     3306
 	User:=     "root"
   	Password:= ""
-  	DBName:=   "profile"
+  	DBName:=   "post"
 	return fmt.Sprintf(
 		"%s:%s@tcp(%s:%d)/%s?charset=utf8&parseTime=True&loc=Local",
 		User,

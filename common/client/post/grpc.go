@@ -1,4 +1,4 @@
-package client
+package post
 
 import (
 	"common/proto/post"
@@ -26,7 +26,7 @@ func NewProfileClient()(client post.PostServiceClient,close func()error,err erro
 	if err != nil {
 		return nil, func() error { return nil }, err
 	}
-	return Post.NewPostServiceClient(conn),conn.Close,nil
+	return post.NewPostServiceClient(conn),conn.Close,nil
 }
 
 func grpcDialOpts(grpcAddr string) ([]grpc.DialOption, error) {

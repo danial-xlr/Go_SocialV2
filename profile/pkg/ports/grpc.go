@@ -8,6 +8,7 @@ import (
 )
 
 type GrpcServer struct {
+	pb.UnimplementedProfileServiceServer
 	app app.Application
 }
 

@@ -2,20 +2,20 @@ package main
 
 import (
 	"context"
-	"profile/pkg/ports"
-	"profile/pkg/service"
+	"relation/pkg/ports"
+	"relation/pkg/service"
 	"common/server"
-	"common/proto/profile"
+	"common/proto/relation"
 
 	"google.golang.org/grpc"
 )
 
-func main() {	
+func main(){
 	ctx := context.Background()
-	application := service.NewApplication(ctx)	
+
+	application := service.NewApplication(ctx)
 	server.RunGRPCServer(func(server *grpc.Server) {
 		svc := ports.NewGrpcServer(application)
-		profile.RegisterProfileServiceServer(server, svc)
+		relation.RegisterRelationServiceServer(server, svc)
 	})
-	
-}	
+}
